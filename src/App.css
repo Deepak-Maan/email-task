@@ -35,6 +35,17 @@ input[type="email"] {
   border-radius: 3px;
 }
 
+textarea {
+  width: 100%;
+  max-width: 382px;
+  padding: 8px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  height: 40px;
+}
+
 button {
   width: 100%;
   padding: 10px;
@@ -53,4 +64,8 @@ button:disabled {
 p {
   margin-top: 10px;
   color: green;
+}
+
+.resize-none {
+  resize: none;
 }

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import emailjs from '@emailjs/browser';
 
-
 const EmailForm = () => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
+    const [message, setMessage] = useState('');
     const [isValidFirstName, setIsValidFirstName] = useState(false);
     const [isValidLastName, setIsValidLastName] = useState(false);
     const [isValidEmail, setIsValidEmail] = useState(false);
@@ -35,6 +35,11 @@ const EmailForm = () => {
         setIsValidEmail(emailRegex.test(value));
     };
 
+    const handleMessageChange = (event) => {
+        const { value } = event.target;
+        setMessage(value);
+    };
+
     const handleSubmit = (event) => {
         event.preventDefault();
         if (isValidFirstName && isValidLastName && isValidEmail) {
@@ -45,6 +50,7 @@ const EmailForm = () => {
             const templateParams = {
                 to_email: email,
                 from_name: `${firstName} ${lastName}`,
+                message: message
             };
 
             emailjs.send(serviceId, templateId, templateParams, userId)
@@ -53,6 +59,7 @@ const EmailForm = () => {
                     setFirstName('');
                     setLastName('');
                     setEmail('');
+                    setMessage('');
                     setIsValidFirstName(false);
                     setIsValidLastName(false);
                     setIsValidEmail(false);
@@ -78,7 +85,6 @@ const EmailForm = () => {
                             type="text"
                             value={firstName}
                             onChange={handleFirstNameChange}
-
                             disabled={isSubmitted}
                         />
                     </label>
@@ -88,7 +94,6 @@ const EmailForm = () => {
                             type="text"
                             value={lastName}
                             onChange={handleLastNameChange}
-
                             disabled={isSubmitted}
                         />
                     </label>
@@ -98,8 +103,16 @@ const EmailForm = () => {
                             type="email"
                             value={email}
                             onChange={handleEmailChange}
-
                             disabled={isSubmitted}
+                        />
+                    </label>
+                    <label>
+                        Message:
+                        <textarea
+                            value={message}
+                            onChange={handleMessageChange}
+                            disabled={isSubmitted}
+                            className='resize-none'
                         />
                     </label>
                     <button type="submit" disabled={isSubmitted}>
